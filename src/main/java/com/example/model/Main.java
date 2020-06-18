@@ -40,11 +40,13 @@ public class Main {
      * @param expectedMeetingDuration the expected meeting duration
      * @return list of all possible time ranges
      */
-    public  List<TimeRange> getPossibleMeetingDates(Calendar firstCalendar, Calendar secondCalendar, String expectedMeetingDuration){
+    public List<TimeRange> getPossibleMeetingDates(Calendar firstCalendar, Calendar secondCalendar, String expectedMeetingDuration){
 
-        //simple method parameters validation
+        //simple method parameters (calendars) validation
         Preconditions.checkNotNull(firstCalendar);
         Preconditions.checkNotNull(secondCalendar);
+
+        //validation for meeting duration format
         Preconditions.checkNotNull(expectedMeetingDuration);
         Preconditions.checkArgument(expectedMeetingDuration.matches(TIME24HOURS_PATTERN));
 
@@ -69,7 +71,7 @@ public class Main {
      * @param calendar the calender to be processed
      * @return list of all available time ranges
      */
-    private  List<TimeRange> getAvailableTimeRanges(Calendar calendar, String expectedMeetingDuration){
+    private List<TimeRange> getAvailableTimeRanges(Calendar calendar, String expectedMeetingDuration){
         List<TimeRange> availableTimeRanges = new ArrayList<>();
 
         List<Meeting> currentPlannedMeetings = calendar.getPlannedMeetings();
@@ -99,7 +101,7 @@ public class Main {
      * @param expectedMeetingDuration the duration for filtering data
      * @return list containing result of filtering
      */
-    public  List<TimeRange> filterTimeRanges(List<TimeRange> timeRanges, String expectedMeetingDuration){
+    public List<TimeRange> filterTimeRanges(List<TimeRange> timeRanges, String expectedMeetingDuration){
         return timeRanges.stream()
                 .filter(element -> element.calculateDuration().compareTo(expectedMeetingDuration) >= 0)
                 .collect(Collectors.toList());
@@ -111,7 +113,7 @@ public class Main {
      * @param secondRange time range to be processed
      * @return time range representing the intersection of sets
      */
-    private  TimeRange getTimeRangesIntersection(TimeRange firstRange, TimeRange secondRange){
+    private TimeRange getTimeRangesIntersection(TimeRange firstRange, TimeRange secondRange){
 
         //first range
         final LocalTime firstStart = firstRange.getFrom();
